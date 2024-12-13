@@ -2,7 +2,7 @@
 const path = require("path");
 require("dotenv").config();
 // const { DATABASE_URL } = process.env;
-const DATABASE_URL="postgresql://chegg_render_postgres_user:rKzurJBIAcdxgudsbOncejfRW6MdPiuz@dpg-ctc6vjogph6c73ad1080-a.oregon-postgres.render.com/chegg_render_postgres?ssl=true"
+const DATABASE_URL="postgresql://chegg_render_postgres_user:<password>@dpg-ctc6vjogph6c73ad1080-a.oregon-postgres.render.com/chegg_render_postgres?ssl=true"
 
 module.exports = {
   development: {
