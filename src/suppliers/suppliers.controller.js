@@ -1,6 +1,7 @@
 const suppliersService = require("./suppliers.service");
 const hasProperties = require("../errors/hasProperties");
 const hasRequiredProperties = hasProperties("supplier_name", "supplier_email");
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 const VALID_PROPERTIES = [
   "supplier_name",
@@ -31,17 +32,14 @@ function hasOnlyValidProperties(req, res, next) {
   next();
 }
 
-function supplierExists(req, res, next) {
-  suppliersService
-      .read(req.params.supplierId)
-      .then((supplier) => {
-        if (supplier) {
-          res.locals.supplier = supplier;
-          return next();
-        }
-        next({ status: 404, message: `Supplier cannot be found.` });
-      })
-      .catch(next);
+// Module 3.10.7
+async function supplierExists(req, res, next) {
+  const supplier = await suppliersService.read(req.params.supplierId);
+  if (supplier) {
+    res.locals.supplier = supplier;
+    return next();
+  }
+  next({ status: 404, message: `Supplier cannot be found.` });
 }
 
 // Added list function just for some validations...
@@ -53,34 +51,42 @@ function list(req, res, next) {
 }
 //
 
-function create(req, res, next) {
-  suppliersService
-      .create(req.body.data)
-      .then((data) => res.status(201).json({ data }))
-      .catch(next);
+// Module 3.10.7
+async function create(req, res) {
+  const data = await suppliersService.create(req.body.data);
+  res.status(201).json({ data });
 }
 
-function update(req, res, next) {
+// Module 3.10.7
+async function update(req, res) {
   const updatedSupplier = {
     ...req.body.data,
     supplier_id: res.locals.supplier.supplier_id,
   };
-  suppliersService
-      .update(updatedSupplier)
-      .then((data) => res.json({ data }))
-      .catch(next);
+  const data = await suppliersService.update(updatedSupplier);
+  res.json({ data });
 }
 
-function destroy(req, res, next) {
-  suppliersService
-      .delete(res.locals.supplier.supplier_id)
-      .then(() => res.sendStatus(204))
-      .catch(next);
+// Module 3.10.7
+async function destroy(req, res) {
+  const { supplier } = res.locals;
+  await suppliersService.delete(supplier.supplier_id);
+  res.sendStatus(204);
 }
 
+// Module 3.10.7
 module.exports = {
   list, // Added for validations
-  create: [hasOnlyValidProperties, hasRequiredProperties, create],
-  update: [supplierExists, hasOnlyValidProperties, hasRequiredProperties, update],
-  delete: [supplierExists, destroy],
+  create: [
+    hasOnlyValidProperties,
+    hasRequiredProperties,
+    asyncErrorBoundary(create),
+  ],
+  update: [
+    asyncErrorBoundary(supplierExists),
+    hasOnlyValidProperties,
+    hasRequiredProperties,
+    asyncErrorBoundary(update),
+  ],
+  delete: [asyncErrorBoundary(supplierExists), asyncErrorBoundary(destroy)],
 };
