@@ -8,6 +8,7 @@ function read(productId) {
     return knex("products").select("*").where({ product_id: productId }).first();
 }
 
+// List Out of Stock products...
 function listOutOfStockCount() {
     return knex("products")
         .select("product_quantity_in_stock as out_of_stock")
@@ -16,6 +17,7 @@ function listOutOfStockCount() {
         .groupBy("out_of_stock");
 }
 
+// List price summary:  min, max, avg
 function listPriceSummary() {
     return knex("products")
         .select("supplier_id")
@@ -25,9 +27,22 @@ function listPriceSummary() {
         .groupBy("supplier_id");
 }
 
+// List products total weight...
+function listTotalWeightByProduct() {
+    return knex("products")
+        .select(
+            "product_sku",
+            "product_title",
+            knex.raw(
+                "sum(product_weight_in_lbs * product_quantity_in_stock) as total_weight_in_lbs"
+            )
+        )
+        .groupBy("product_title", "product_sku");
+}
 module.exports = {
     list,
     read,
     listOutOfStockCount,
     listPriceSummary,
+    listTotalWeightByProduct,
 };
