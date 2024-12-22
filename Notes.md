@@ -235,4 +235,21 @@ Express server running at http://localhost:5001!
       }
       ```
     - put (example, TBD)
+      - http://localhost:5001/suppliers/6
+      ```aiignore
+      {
+          "data": {
+              "supplier_name": "Joe Tech",
+              "supplier_address_line_1": "123 Main Street",
+              "supplier_address_line_2": "Suite 400",
+              "supplier_city": "Wyoming",
+              "supplier_state": "Minnesota",
+              "supplier_zip": 55092,
+              "supplier_phone": 7631234567,
+              "supplier_email": "joe@tech.com",
+              "supplier_notes": "Just a note. With update after testing delete and post again. Testing after refactor with await, async module 3.10.7. Test local dev with docker.",
+              "supplier_type_of_goods": "Raw"
+          }
+      }
+      ```
     - del (example, TBD)
