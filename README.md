@@ -2,6 +2,8 @@
 
 This starter code is intended to be run for the *Node.js, Express, and PostgreSQL* module in the Chegg Skills curriculum.
 
+## This app is deployed on Render.com:  https://kernel528-starter-node-express-postgresql.onrender.com/
+
 ## Existing files
 
 As you work through the *Node.js, Express, and PostgreSQL* module, you will be writing code that allows your controllers to connect to and query your PostgreSQL database via [Knex](http://knexjs.org/). The table below describes the files and folders in the starter code:

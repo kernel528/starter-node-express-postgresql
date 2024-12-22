@@ -104,3 +104,9 @@ Ran 4 seed files
 - Went through the steps to create a new web service on Render.com.  Connected to my GitHub repository.
 - Added the PRODUCTION_DATABASE_URL environment variable to the web service.  Used the DB URL from the .env file.
 - Deployed the web service.
+  - Initial attempt failed for two reasons:
+    1. I forgot to push my local changes to the GitHub repository.
+    2. I forgot to double-check the server.js file for any changes needed.  Didn't need to make any changes.
+- After pushing and merging updates to main branch, attempted to deploy again.
+  - This time the deployment was successful!
+  - The web service is now live at https://kernel528-starter-node-express-postgresql.onrender.com/
