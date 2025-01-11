@@ -2,7 +2,7 @@
 
 This starter code is intended to be run for the *Node.js, Express, and PostgreSQL* module in the Chegg Skills curriculum.
 
-## This app is deployed on Render.com:  https://kernel528-starter-node-express-postgresql.onrender.com/
+### This app is deployed on Render.com:  https://kernel528-starter-node-express-postgresql.onrender.com/
 
 ## Existing files
 
